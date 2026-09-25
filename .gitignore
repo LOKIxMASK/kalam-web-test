@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# source frames for the hero (processed copies live in public/sequence)
+/public/images/
+
+# local tooling
+/.claude/

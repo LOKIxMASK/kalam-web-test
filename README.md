@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KalamSpark by Acubotz — launch microsite
 
-## Getting Started
+A cinematic, scroll-driven landing page for KalamSpark, India's first humanoid study companion.
+Built with Next.js (App Router), React, Tailwind CSS v4, Framer Motion and Lenis.
 
-First, run the development server:
+## Run it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. For a production build: `npm run build` then `npm start`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Editing content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | Where |
+| --- | --- |
+| Package names, prices, features, CTA links | `lib/content.ts` → `packages` |
+| Subjects in the learning universe | `lib/content.ts` → `subjects` |
+| Ask → Understand → Practice → Plan → Focus timeline | `lib/content.ts` → `experienceStages` |
+| Nav and footer links, site URL | `lib/content.ts` |
+| Colours and type scale | `app/globals.css` (`:root` tokens) |
 
-## Learn More
+Official pricing has not been published, so every price reads `[PRICE TO BE ADDED]`
+and Package 03 lists placeholder features. Change them in `lib/content.ts` only.
+All "Get KalamSpark" / "Explore Package" buttons currently link to `#`.
 
-To learn more about Next.js, take a look at the following resources:
+## Page structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`app/page.tsx` composes the sections in order:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. `Hero` — pinned scroll sequence (no buttons). The robot video in `public/sequence/` scrubs with scroll
+   while five feature chapters reveal on alternating sides. Chapter copy and timing live at the top of
+   `components/sections/Hero.tsx`; the canvas player is `components/FrameSequence.tsx`.
+2. `Manifesto` — Learn. / Build. / Inspire. one word per viewport
+3. `WhatIs` — robot ↔ phone with animated connection lines
+4. `AlwaysReady` — pinned dashboard; six parts light up in sequence
+5. `VoiceFirst` — the conversation reveals with scroll over a live waveform
+6. `Homework` — notebook scan, steps unlocked along a golden line
+7. `NightStudy` — dims the whole page; focus ring counts down to 18:00
+8. `Universe` — seven subjects orbiting Kalam; hover or tap to inspect
+9. `LightDark` — scroll-linked navy → cream transition with a vertical wipe
+10. `Experience` — horizontal timeline driven by vertical scroll
+11. `Pricing` — packages arrive one at a time in perspective depth
+12. `FinalCTA` — golden sunrise, closing statement and main CTA
 
-## Deploy on Vercel
+Shared pieces: `components/SpaceBackground.tsx` (canvas stars, nebulas, planets, grain),
+`components/mockups/` (phone screens and the robot), `components/ui/Reveal.tsx` (motion vocabulary).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Hero frame sequence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`public/sequence/f001.webp … f150.webp` are cut-outs of the frames in `public/images/`
+(every 2nd frame, background removed with the u2net model, masks smoothed across neighbouring
+frames and faded at the edges so the robot sits directly on the site background).
+The page only loads `public/sequence/`. The original PNGs in `public/images/` (~175 MB) are not
+used at runtime; move them out of `public/` before deploying to keep the upload small.
+
+## Notes
+
+- Scroll progress goes through `lib/useProgress.ts`. Framer Motion 13 otherwise hands
+  simple opacity transforms to a native ViewTimeline that ignores custom offsets.
+- `prefers-reduced-motion` disables Lenis, parallax, blur reveals and the star animation.
+- The Kalam portrait (`public/kalam-face.png`) was cropped from the supplied KalamSpark deck.
+  The standing robot figure is `public/kalam-robot.png`, supplied by Acubotz.
