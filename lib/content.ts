@@ -150,8 +150,8 @@ export type TeamMember = { id: string; name: string; title: string; role: string
 export const teamLead: TeamMember = { id: "mission-head", name: "Krishnanunni J S", title: "The Mission Head", role: "Team Lead & Project Head", photo: "/team/mission-head.webp" };
 
 export const team: TeamMember[] = [
+  { id: "code-wizard", name: "Akhilraj U R", title: "The Tech Mastermind", role: "Lead Developer & Hardware Architect", photo: "/team/code-wizard.png" },
   { id: "brain-maker", name: "Abhinand Anilkumar", title: "The Brain & Learning Maker", role: "AI Engineer & Content Head", photo: "/team/brain-maker.webp" },
-  { id: "code-wizard", name: "Akhilraj U R", title: "The Code Wizard", role: "Lead Programmer", photo: "/team/code-wizard.png" },
   { id: "dream-designer", name: "Mohammed Habeeb Hassan", title: "The Dream Designer", role: "Designer", photo: "/team/dream-designer.webp" },
   { id: "art-magician", name: "Baisil S V", title: "The Art Magician", role: "Artist", photo: "/team/art-magician.webp" },
 ];
