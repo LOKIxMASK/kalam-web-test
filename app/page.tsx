@@ -7,6 +7,7 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { Manifesto } from "@/components/sections/Manifesto";
 import { WhatIs } from "@/components/sections/WhatIs";
+import { PoweredBy } from "@/components/sections/PoweredBy";
 import { AlwaysReady } from "@/components/sections/AlwaysReady";
 import { VoiceFirst } from "@/components/sections/VoiceFirst";
 import { Homework } from "@/components/sections/Homework";
@@ -15,6 +16,7 @@ import { Universe } from "@/components/sections/Universe";
 import { LightDark } from "@/components/sections/LightDark";
 import { Experience } from "@/components/sections/Experience";
 import { Pricing } from "@/components/sections/Pricing";
+import { Team } from "@/components/sections/Team";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/Footer";
 
@@ -29,14 +31,16 @@ export default function Home() {
             <Hero />
             <Manifesto />
             <WhatIs />
+            <PoweredBy />
             <AlwaysReady />
             <VoiceFirst />
             <Homework />
             <NightStudy />
             <Universe />
-            <LightDark />
             <Experience />
             <Pricing />
+            <LightDark />
+            <Team />
             <FinalCTA />
           </main>
           <Footer />

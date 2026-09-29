@@ -11,7 +11,7 @@ export const brand = {
   company: "Acubotz",
   tagline: "Igniting Curiosity, Inspiring Innovation",
   product: "KalamSpark",
-  positioning: "India's first humanoid study companion",
+  positioning: "World's first smallest animatronic study companion",
   site: "https://acubotz.com",
   siteLabel: "acubotz.com",
 };
@@ -43,7 +43,7 @@ export const packages: Package[] = [
     id: "app",
     number: "01",
     name: "KalamSpark App",
-    price: "[PRICE TO BE ADDED]",
+    price: "Coming soon",
     priceNote: "Pricing will be announced soon",
     summary: "Kalam in your pocket. The complete study companion experience on Android.",
     features: [
@@ -61,7 +61,7 @@ export const packages: Package[] = [
     id: "companion",
     number: "02",
     name: "KalamSpark Companion",
-    price: "[PRICE TO BE ADDED]",
+    price: "Coming soon",
     priceNote: "Pricing will be announced soon",
     summary: "The app and the humanoid robot, working as one companion.",
     features: [
@@ -82,7 +82,7 @@ export const packages: Package[] = [
     id: "complete",
     number: "03",
     name: "KalamSpark Complete",
-    price: "[PRICE TO BE ADDED]",
+    price: "Coming soon",
     priceNote: "Pricing will be announced soon",
     summary: "Everything in Companion, plus the complete KalamSpark product experience.",
     features: [
@@ -138,4 +138,20 @@ export const footerLinks = [
   { label: "Contact", href: "https://acubotz.com" },
   { label: "Privacy", href: "#" },
   { label: "Terms", href: "#" },
+];
+
+/**
+ * The minds behind Kalam.
+ * To add a photo: put the image in /public/team/ and set `photo`,
+ * e.g. photo: "/team/code-wizard.jpg". Leave it null to show the placeholder.
+ */
+export type TeamMember = { id: string; name: string; title: string; role: string; photo: string | null };
+
+export const teamLead: TeamMember = { id: "mission-head", name: "Krishnanunni J S", title: "The Mission Head", role: "Team Lead & Project Head", photo: "/team/mission-head.webp" };
+
+export const team: TeamMember[] = [
+  { id: "brain-maker", name: "Abhinand Anilkumar", title: "The Brain & Learning Maker", role: "AI Engineer & Content Head", photo: "/team/brain-maker.webp" },
+  { id: "code-wizard", name: "Akhilraj U R", title: "The Code Wizard", role: "Lead Programmer", photo: "/team/code-wizard.png" },
+  { id: "dream-designer", name: "Mohammed Habeeb Hassan", title: "The Dream Designer", role: "Designer", photo: "/team/dream-designer.webp" },
+  { id: "art-magician", name: "Baisil S V", title: "The Art Magician", role: "Artist", photo: "/team/art-magician.webp" },
 ];

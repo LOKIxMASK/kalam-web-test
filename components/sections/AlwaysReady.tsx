@@ -107,12 +107,12 @@ export function AlwaysReady() {
   const bar = useTransform(p, [0.06, 0.92], [0, 1]);
 
   return (
-    <section id="features" ref={ref} className="relative h-[520vh] lg:h-[560vh]" aria-label="Always ready">
+    <section id="features" ref={ref} className="relative h-[200vh]" aria-label="Always ready">
       <div className="sticky top-0 h-[100svh] overflow-hidden px-5 lg:px-8">
         <div className="ar-grid mx-auto grid h-full max-w-[1320px] gap-4 pb-6 pt-[12vh] lg:gap-x-14 lg:gap-y-8 lg:pb-[7vh] lg:pt-[13vh]">
           <div style={{ gridArea: "h" }}>
             <Eyebrow>Always ready</Eyebrow>
-            <RevealLines className="mt-5 text-[clamp(2rem,3vw,3.2rem)] font-bold leading-[1.02] tracking-[-0.035em] text-ink" lines={["Your study buddy,", "always ready."]} />
+            <RevealLines className="mt-5 text-[clamp(2rem,3vw,3.2rem)] font-bold leading-[1.02] tracking-[-0.035em] text-ink" lines={["Your study companion,", "always ready."]} />
             <FadeUp className="mt-5 text-[1rem] leading-relaxed text-ink-2 max-lg:hidden" delay={0.2}>
               Kalam listens, plans your day and reminds you what matters.
             </FadeUp>

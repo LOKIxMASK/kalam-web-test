@@ -220,7 +220,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.3, ease: EASE, delay: 1.5 }}
           >
-            India&rsquo;s first humanoid study companion
+            World&rsquo;s first smallest animatronic study companion
           </motion.p>
           <RevealLines
             as="h1"
@@ -228,15 +228,32 @@ export function Hero() {
             delay={1.85}
             stagger={0.17}
             className="text-[clamp(2.6rem,5.6vw,7.4rem)] font-bold leading-[0.96] tracking-[-0.045em] text-ink"
-            lines={[<>Meet <span className="text-gold-gradient">KalamSpark</span>,</>, "the study buddy", "with a face."]}
+            lines={[<>Meet <span className="text-gold-gradient">KalamSpark</span>,</>, "the study", "companion."]}
           />
+          <motion.p
+            className="mt-5 text-[clamp(1.05rem,1.5vw,1.5rem)] font-semibold tracking-[-0.01em] text-gold md:mt-7"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.4, ease: EASE, delay: 2.6 }}
+          >
+            Igniting curiosity, inspiring innovation.
+          </motion.p>
           <motion.p
             className="lede mt-5 max-w-[30rem] max-md:text-[0.95rem] md:mt-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.6, ease: EASE, delay: 2.9 }}
           >
-            Talk to Kalam out loud, get homework explained step by step, plan the week and focus after dark.
+            Curiosity has a new companion.
+          </motion.p>
+          <motion.p
+            className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/[0.07] px-4 py-2 text-[0.72rem] font-semibold tracking-[0.18em] text-ink-2 uppercase backdrop-blur-md md:mt-8"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.4, ease: EASE, delay: 3.2 }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_10px_rgba(245,194,66,0.9)]" aria-hidden />
+            Powered by <span className="font-bold text-ink">Acubotz<span className="text-gold">OS</span></span>
           </motion.p>
         </motion.div>
 

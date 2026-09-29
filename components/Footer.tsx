@@ -1,13 +1,11 @@
 import { brand, footerLinks } from "@/lib/content";
-import { AcubotzMark } from "./ui/AcubotzLogo";
 
 export function Footer() {
   return (
     <footer className="relative bg-[#04060d] px-5 pb-12 pt-[18vh] md:px-8">
       <div className="mx-auto max-w-[1320px]">
         <div className="flex flex-col items-center text-center">
-          <AcubotzMark size={44} />
-          <p className="mt-6 text-[clamp(2.4rem,5vw,4.6rem)] font-bold tracking-[-0.045em] text-ink">
+          <p className="text-[clamp(2.4rem,5vw,4.6rem)] font-bold tracking-[-0.045em] text-ink">
             <span className="text-gold">A</span>cubotz
           </p>
           <p className="mt-3 text-[0.95rem] text-ink-2 md:text-[1.1rem]">{brand.tagline}</p>

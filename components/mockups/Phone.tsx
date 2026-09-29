@@ -30,7 +30,6 @@ import {
   Zap,
 } from "lucide-react";
 import { subjects, type SubjectKey } from "@/lib/content";
-import { AcubotzMark } from "../ui/AcubotzLogo";
 
 export const PHONE_W = 360;
 export const PHONE_H = 760;
@@ -361,7 +360,6 @@ export function WelcomeScreen() {
   return (
     <div className="relative flex h-[calc(100%-48px)] flex-col px-6">
       <div className="mt-3 flex items-center gap-2.5">
-        <AcubotzMark size={22} />
         <span className="flex flex-col leading-none">
           <span className="text-[13px] font-bold text-ink"><span className="text-gold">A</span>cubotz</span>
           <span className="mt-1 text-[8.5px] text-ink-2">Igniting Curiosity, Inspiring Innovation</span>

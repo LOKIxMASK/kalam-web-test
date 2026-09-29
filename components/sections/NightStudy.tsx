@@ -55,7 +55,7 @@ export function NightStudy() {
   const moonGlow = useTransform(p, [0, 0.3, 0.9], [0.2, 0.9, 0.6]);
 
   return (
-    <section ref={ref} className="relative h-[360vh] md:h-[380vh]" aria-label="Night study">
+    <section ref={ref} className="relative h-[200vh]" aria-label="Night study">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div
           aria-hidden
