@@ -16,12 +16,12 @@ import { FrameSequence } from "../FrameSequence";
 
 /**
  * Scroll chapters, timed to the frame sequence:
- *   frames   1-50  Kalam standing        -> intro
+ *   frames   1-50  KalamSpark standing        -> intro
  *   frames  55-100 jacket opens          -> 01
  *   frames 105-145 sparks, face lifts    -> 02
  *   frames 150-220 eyes, servos, boards  -> 03 (+ callouts)
  *   frames 225-260 reassembles           -> 04
- *   frames 265-300 Kalam again           -> 05
+ *   frames 265-300 KalamSpark again           -> 05
  */
 const CHAPTERS = [
   {
@@ -36,7 +36,7 @@ const CHAPTERS = [
     n: "02",
     tag: "Voice first",
     title: ["Ask anything.", "Out loud."],
-    body: "Say “Hey Kalam” and talk naturally. Every answer comes with an explanation, not just a result.",
+    body: "Say “Hey KalamSpark” and talk naturally. Every answer comes with an explanation, not just a result.",
     range: [0.35, 0.49] as const,
     side: "right" as const,
   },
@@ -44,7 +44,7 @@ const CHAPTERS = [
     n: "03",
     tag: "Gestures & expression",
     title: ["Eyes that react.", "Hands that point."],
-    body: "Kalam looks at you, reacts and gestures while he explains. Natural conversations, complete with gestures.",
+    body: "KalamSpark looks at you, reacts and gestures while he explains. Natural conversations, complete with gestures.",
     range: [0.51, 0.71] as const,
     side: "left" as const,
   },
@@ -59,8 +59,8 @@ const CHAPTERS = [
   {
     n: "05",
     tag: "Everywhere you study",
-    title: ["The robot at your desk.", "Kalam in your pocket."],
-    body: "The same Kalam, the same voice and your progress, on the robot and the KalamSpark app for Android.",
+    title: ["The robot at your desk.", "KalamSpark in your pocket."],
+    body: "The same KalamSpark, the same voice and your progress, on the robot and the KalamSpark app for Android.",
     range: [0.88, 1.0] as const,
     side: "left" as const,
   },

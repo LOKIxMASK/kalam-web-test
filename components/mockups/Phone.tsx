@@ -170,7 +170,7 @@ export function RobotStatusCard({ active = false, dim = false }: { active?: bool
         <KalamAvatar size={46} />
         <div className="min-w-0 flex-1">
           <p className="text-[14.5px] font-bold text-ink">KalamSpark is ready</p>
-          <p className="mt-0.5 text-[11.5px] text-ink-2">Say &ldquo;Hey Kalam&rdquo; to start talking</p>
+          <p className="mt-0.5 text-[11.5px] text-ink-2">Say &ldquo;Hey KalamSpark&rdquo; to start talking</p>
         </div>
         <ChevronRight size={16} className="text-ink-3" />
       </div>
@@ -262,7 +262,7 @@ export function ChatScreen() {
         <span className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-ink"><ArrowLeft size={16} /></span>
         <KalamAvatar size={40} online={false} />
         <div className="flex-1">
-          <p className="text-[16px] font-bold text-ink">Kalam</p>
+          <p className="text-[16px] font-bold text-ink">KalamSpark</p>
           <p className="flex items-center gap-1.5 text-[11px] text-[#4fd49b]"><span className="h-1.5 w-1.5 rounded-full bg-[#4fd49b]" /> Listening</p>
         </div>
         <span className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-ink"><SlidersHorizontal size={15} /></span>
@@ -271,7 +271,7 @@ export function ChatScreen() {
         Hello Aarav! What shall we explore today?
       </div>
       <div className="ml-auto mt-3 w-fit rounded-[16px] rounded-tr-[6px] bg-gold px-3.5 py-2.5 text-[12.5px] font-semibold text-[#1a1406]">
-        Kalam, why is the sky blue?
+        KalamSpark, why is the sky blue?
       </div>
       <div className="mt-3 w-[88%] rounded-[16px] rounded-tl-[6px] border border-white/10 bg-white/[0.05] p-3 text-[12.5px] leading-[1.55] text-ink">
         Sunlight is a mix of all colours. When it passes through the air, tiny gas molecules scatter blue light much more than red. Scientists call this Rayleigh scattering.
@@ -282,7 +282,7 @@ export function ChatScreen() {
         ))}
       </div>
       <div className="mx-auto mt-3 flex w-fit items-center gap-1.5 rounded-full bg-gold/15 px-3 py-1.5 text-[11px] font-semibold text-gold">
-        <Hand size={12} /> Kalam is pointing at the sky
+        <Hand size={12} /> KalamSpark is pointing at the sky
       </div>
       <div className="absolute inset-x-0 bottom-7 flex flex-col items-center">
         <div className="flex h-8 items-center gap-[3px]">
@@ -291,7 +291,7 @@ export function ChatScreen() {
           ))}
         </div>
         <span className="mt-3 grid h-14 w-14 place-items-center rounded-full bg-gold text-[#1a1406] shadow-[0_0_40px_-4px_rgba(245,194,66,0.7)]"><Mic size={22} /></span>
-        <p className="mt-2 text-[10.5px] text-ink-3">Tap to speak, or say &ldquo;Hey Kalam&rdquo;</p>
+        <p className="mt-2 text-[10.5px] text-ink-3">Tap to speak, or say &ldquo;Hey KalamSpark&rdquo;</p>
       </div>
     </div>
   );

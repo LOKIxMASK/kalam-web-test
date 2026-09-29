@@ -186,7 +186,7 @@ export function Universe() {
                       draggable={false}
                     />
                   </div>
-                  <p className="absolute left-1/2 top-[calc(100%+18px)] -translate-x-1/2 whitespace-nowrap text-[12px] font-bold tracking-[0.3em] text-gold/80 uppercase">Kalam</p>
+                  <p className="absolute left-1/2 top-[calc(100%+18px)] -translate-x-1/2 whitespace-nowrap text-[12px] font-bold tracking-[0.3em] text-gold/80 uppercase">KalamSpark</p>
                 </div>
 
                 {ORBIT.map((s) => (

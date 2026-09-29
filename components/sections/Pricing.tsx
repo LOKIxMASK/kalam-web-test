@@ -114,7 +114,7 @@ export function Pricing() {
         <div className="mx-auto flex w-full max-w-[1320px] items-end justify-between gap-6">
           <div>
             <Eyebrow>Plans &amp; packages</Eyebrow>
-            <RevealLines className="mt-5 text-[clamp(2rem,3.6vw,3.8rem)] font-bold leading-[1] tracking-[-0.04em] text-ink" lines={["Choose how Kalam", "joins you."]} />
+            <RevealLines className="mt-5 text-[clamp(2rem,3.6vw,3.8rem)] font-bold leading-[1] tracking-[-0.04em] text-ink" lines={["Choose how KalamSpark", "joins you."]} />
           </div>
           <FadeUp className="hidden max-w-[18rem] text-right text-[0.85rem] leading-relaxed text-ink-3 md:block" delay={0.2}>
             Official package pricing will be announced soon.

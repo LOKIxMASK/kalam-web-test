@@ -1,26 +1,19 @@
 "use client";
-import { useProgress } from "@/lib/useProgress";
-import { useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { Bell, Check, ChevronRight, Mic, Moon, Pencil, Sparkles } from "lucide-react";
 import { Eyebrow, FadeUp, RevealLines } from "../ui/Reveal";
 import { Fit } from "../ui/Fit";
 import { RobotStatusCard, Tile, schedule } from "../mockups/Phone";
-import { EASE, clamp01 } from "@/lib/motion";
+import { EASE } from "@/lib/motion";
 import { useIsMobile, useReduced } from "@/lib/hooks";
 
 const STEPS = [
-  { key: "robot", label: "Robot status", title: "Ready when you are.", body: "Battery, Home Wi-Fi and gestures, all at a glance. Say “Hey Kalam” and the robot starts talking.", meta: "82% · Home Wi-Fi · Gestures on" },
-  { key: "homework", label: "Homework Helper", title: "Homework Helper", body: "Step-by-step solutions. Scan a problem and Kalam walks you through every step.", meta: "Quick action" },
+  { key: "robot", label: "Robot status", title: "Ready when you are.", body: "Battery, Home Wi-Fi and gestures, all at a glance. Say “Hey KalamSpark” and the robot starts talking.", meta: "82% · Home Wi-Fi · Gestures on" },
+  { key: "homework", label: "Homework Helper", title: "Homework Helper", body: "Step-by-step solutions. Scan a problem and KalamSpark walks you through every step.", meta: "Quick action" },
   { key: "study", label: "Study Assistant", title: "Study Assistant", body: "Explain any concept, from photosynthesis to fractions, in words that make sense.", meta: "Quick action" },
-  { key: "night", label: "Night Study", title: "Night Study", body: "Soft voice and focus mode. After 9 PM Kalam dims his lights and keeps distractions away.", meta: "Quick action" },
-  { key: "reminders", label: "Reminders", title: "Reminders", body: "Kalam listens, plans your day and reminds you what matters. Two are due today.", meta: "2 due today" },
+  { key: "night", label: "Night Study", title: "Night Study", body: "Soft voice and focus mode. After 9 PM KalamSpark dims his lights and keeps distractions away.", meta: "Quick action" },
+  { key: "reminders", label: "Reminders", title: "Reminders", body: "KalamSpark listens, plans your day and reminds you what matters. Two are due today.", meta: "2 due today" },
   { key: "schedule", label: "Today’s schedule", title: "Today’s schedule", body: "Mathematics at nine, Science at eleven, your essay at four. Always know what comes next.", meta: "3 sessions today" },
 ] as const;
 
@@ -81,7 +74,7 @@ function Panel({ active }: { active: number }) {
           </div>
           <div className="mt-5 flex items-center gap-4 rounded-[20px] border border-white/[0.08] bg-white/[0.03] p-3 pr-5 opacity-60">
             <span className="grid h-12 w-12 place-items-center rounded-full bg-gold text-[#1a1406]"><Mic size={19} /></span>
-            <span className="text-[13px] text-ink-2">Say &ldquo;Hey Kalam&rdquo; to start talking</span>
+            <span className="text-[13px] text-ink-2">Say &ldquo;Hey KalamSpark&rdquo; to start talking</span>
           </div>
         </div>
       </div>
@@ -89,37 +82,43 @@ function Panel({ active }: { active: number }) {
   );
 }
 
+const STEP_MS = 3200; // how long each feature stays highlighted
+
 export function AlwaysReady() {
   const ref = useRef<HTMLElement>(null);
   const mobile = useIsMobile();
   const reduce = useReduced();
-  const p = useProgress(ref, ["start start", "end end"]);
+  const inView = useInView(ref, { amount: 0.35 });
   const [active, setActive] = useState(0);
-  useMotionValueEvent(p, "change", (v) => {
-    const i = Math.min(STEPS.length - 1, Math.floor(clamp01((v - 0.06) / 0.86) * STEPS.length));
-    setActive(i);
-  });
-  const enter = useProgress(ref, ["start end", "start start"]);
-  const enterS = useSpring(enter, { stiffness: 90, damping: 26 });
-  const tilt = useTransform(enterS, [0, 1], [reduce ? 0 : 28, 0]);
-  const lift = useTransform(enterS, [0, 1], [reduce ? 0 : 160, 0]);
-  const panelScale = useTransform(enterS, [0, 1], [0.86, 1]);
-  const bar = useTransform(p, [0.06, 0.92], [0, 1]);
+
+  // auto-advance through the features while the section is on screen
+  useEffect(() => {
+    if (!inView) return;
+    const id = setTimeout(() => setActive((a) => (a + 1) % STEPS.length), STEP_MS);
+    return () => clearTimeout(id);
+  }, [active, inView]);
 
   return (
-    <section id="features" ref={ref} className="relative h-[200vh]" aria-label="Always ready">
-      <div className="sticky top-0 h-[100svh] overflow-hidden px-5 lg:px-8">
+    <section id="features" ref={ref} className="relative" aria-label="Always ready">
+      <div className="h-[100svh] min-h-[640px] overflow-hidden px-5 lg:px-8">
         <div className="ar-grid mx-auto grid h-full max-w-[1320px] gap-4 pb-6 pt-[12vh] lg:gap-x-14 lg:gap-y-8 lg:pb-[7vh] lg:pt-[13vh]">
           <div style={{ gridArea: "h" }}>
             <Eyebrow>Always ready</Eyebrow>
             <RevealLines className="mt-5 text-[clamp(2rem,3vw,3.2rem)] font-bold leading-[1.02] tracking-[-0.035em] text-ink" lines={["Your study companion,", "always ready."]} />
             <FadeUp className="mt-5 text-[1rem] leading-relaxed text-ink-2 max-lg:hidden" delay={0.2}>
-              Kalam listens, plans your day and reminds you what matters.
+              KalamSpark listens, plans your day and reminds you what matters.
             </FadeUp>
           </div>
 
           <div className="relative min-h-0" style={{ gridArea: "p", perspective: 1600 }} aria-hidden>
-            <motion.div className="h-full w-full" style={{ rotateX: tilt, y: lift, scale: panelScale, transformOrigin: "50% 100%" }}>
+            <motion.div
+              className="h-full w-full"
+              style={{ transformOrigin: "50% 100%" }}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, rotateX: 28, y: 160, scale: 0.86 }}
+              whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 1.4, ease: EASE }}
+            >
               {mobile ? (
                 <Fit w={520} h={760} max={1}>
                   <MobilePanel active={active} />
@@ -136,7 +135,13 @@ export function AlwaysReady() {
             <div className="flex items-center gap-4 text-[0.72rem] font-semibold tracking-[0.2em] tabular-nums">
               <span className="text-gold">{String(active + 1).padStart(2, "0")}</span>
               <span className="relative h-px w-24 bg-white/10">
-                <motion.span className="absolute inset-0 origin-left bg-gold" style={{ scaleX: bar }} />
+                <motion.span
+                  key={`${active}-${inView}`}
+                  className="absolute inset-0 origin-left bg-gold"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: inView ? 1 : 0 }}
+                  transition={{ duration: STEP_MS / 1000, ease: "linear" }}
+                />
               </span>
               <span className="text-ink-3">06</span>
             </div>
@@ -155,11 +160,17 @@ export function AlwaysReady() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <ul className="mt-6 hidden space-y-2.5 lg:block" aria-hidden>
+            <ul className="mt-6 hidden space-y-2.5 lg:block">
               {STEPS.map((s, i) => (
-                <li key={s.key} className={`flex items-center gap-3 text-[0.82rem] transition-colors duration-500 ${i === active ? "text-ink" : "text-ink-3"}`}>
-                  <span className={`h-px transition-all duration-500 ${i === active ? "w-8 bg-gold" : "w-3 bg-white/20"}`} />
-                  {s.label}
+                <li key={s.key}>
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    className={`flex items-center gap-3 text-[0.82rem] transition-colors duration-500 hover:text-ink ${i === active ? "text-ink" : "text-ink-3"}`}
+                  >
+                    <span className={`h-px transition-all duration-500 ${i === active ? "w-8 bg-gold" : "w-3 bg-white/20"}`} />
+                    {s.label}
+                  </button>
                 </li>
               ))}
             </ul>

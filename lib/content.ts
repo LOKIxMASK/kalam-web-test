@@ -45,9 +45,9 @@ export const packages: Package[] = [
     name: "KalamSpark App",
     price: "Coming soon",
     priceNote: "Pricing will be announced soon",
-    summary: "Kalam in your pocket. The complete study companion experience on Android.",
+    summary: "KalamSpark in your pocket. The complete study companion experience on Android.",
     features: [
-      "Kalam voice assistant",
+      "KalamSpark voice assistant",
       "Study assistance",
       "Homework support",
       "Planner",
@@ -119,11 +119,11 @@ export const subjects: {
   { key: "social", name: "Social Science", progress: "4 of 13 chapters", ratio: 4 / 13, blurb: "Maps, history and how societies work." },
   { key: "gk", name: "General Knowledge", progress: "5 of 10 topics", ratio: 5 / 10, blurb: "Curious facts about the world around you." },
   { key: "coding", name: "Coding", progress: "3 of 8 projects", ratio: 3 / 8, blurb: "Build small projects and learn by making." },
-  { key: "ai", name: "Artificial Intelligence", progress: "Start with “What is AI?”", ratio: 0, blurb: "Understand the ideas behind Kalam himself.", isNew: true },
+  { key: "ai", name: "Artificial Intelligence", progress: "Start with “What is AI?”", ratio: 0, blurb: "Understand the ideas behind KalamSpark himself.", isNew: true },
 ];
 
 export const experienceStages = [
-  { key: "ask", word: "Ask", line: "Talk naturally.", detail: "Say “Hey Kalam” and ask anything, out loud." },
+  { key: "ask", word: "Ask", line: "Talk naturally.", detail: "Say “Hey KalamSpark” and ask anything, out loud." },
   { key: "understand", word: "Understand", line: "Complex ideas, explained simply.", detail: "Rayleigh scattering, in words that make sense." },
   { key: "practice", word: "Practice", line: "Step-by-step learning.", detail: "Scan a problem. Follow every step to the answer." },
   { key: "plan", word: "Plan", line: "Know what comes next.", detail: "Today's schedule, reminders and the week ahead." },
@@ -141,7 +141,7 @@ export const footerLinks = [
 ];
 
 /**
- * The minds behind Kalam.
+ * The minds behind KalamSpark.
  * To add a photo: put the image in /public/team/ and set `photo`,
  * e.g. photo: "/team/code-wizard.jpg". Leave it null to show the placeholder.
  */

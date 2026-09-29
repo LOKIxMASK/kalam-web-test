@@ -1,11 +1,14 @@
 "use client";
 import { useReduced } from "@/lib/hooks";
-import { useProgress } from "@/lib/useProgress";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  animate,
   motion,
+  useInView,
+  useMotionValue,
   useMotionValueEvent,
   useTransform,
+  type AnimationPlaybackControls,
   type MotionValue,
 } from "framer-motion";
 import { Hand } from "lucide-react";
@@ -13,15 +16,21 @@ import { Eyebrow, FadeUp, RevealLines } from "../ui/Reveal";
 import { KalamAvatar } from "../mockups/Phone";
 import { EASE } from "@/lib/motion";
 
-const QUESTION = "Kalam, why is the sky blue?";
+const QUESTION = "KalamSpark, why is the sky blue?";
 const ANSWER =
   "Sunlight is a mix of all colours. When it passes through the air, tiny gas molecules scatter blue light much more than red. So blue reaches your eyes from every direction of the sky. Scientists call this Rayleigh scattering.";
 
-function ScrollWord({ p, a, b, children, className }: { p: MotionValue<number>; a: number; b: number; children: string; className?: string }) {
-  const opacity = useTransform(p, [a, b], [0.12, 1]);
-  const y = useTransform(p, [a, b], [6, 0]);
+// each word eases in on its own once the timeline reaches it, so the reveal stays fluid
+function ScrollWord({ p, a, children, className }: { p: MotionValue<number>; a: number; children: string; className?: string }) {
+  const [on, setOn] = useState(() => p.get() >= a);
+  useMotionValueEvent(p, "change", (v) => setOn(v >= a));
   return (
-    <motion.span style={{ opacity, y }} className={`inline-block ${className ?? ""}`}>
+    <motion.span
+      initial={false}
+      animate={on ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0.12, y: 10, filter: "blur(4px)" }}
+      transition={{ duration: on ? 0.7 : 0.4, ease: EASE }}
+      className={`inline-block will-change-transform ${className ?? ""}`}
+    >
       {children}&nbsp;
     </motion.span>
   );
@@ -33,7 +42,7 @@ function ScrollText({ text, p, start, end, highlight }: { text: string; p: Motio
   return (
     <>
       {words.map((w, i) => (
-        <ScrollWord key={i} p={p} a={start + i * step} b={start + (i + 1.6) * step} className={highlight && w.includes(highlight) ? "text-gold" : undefined}>
+        <ScrollWord key={i} p={p} a={start + i * step} className={highlight && w.includes(highlight) ? "text-gold" : undefined}>
           {w}
         </ScrollWord>
       ))}
@@ -42,10 +51,12 @@ function ScrollText({ text, p, start, end, highlight }: { text: string; p: Motio
 }
 
 const BARS = 72;
+const PLAY_S = 16; // one full question -> answer -> gesture run
+const HOLD_MS = 4000; // pause on the finished conversation before replaying
 
 function Waveform({ p }: { p: MotionValue<number> }) {
   const reduce = useReduced();
-  // amplitude: user speaking, pause, Kalam speaking, settle
+  // amplitude: user speaking, pause, KalamSpark speaking, settle
   const amp = useTransform(p, [0.05, 0.12, 0.28, 0.34, 0.4, 0.72, 0.8, 1], [0.18, 0.75, 0.75, 0.2, 0.9, 0.9, 0.3, 0.25]);
   const goldOpacity = useTransform(p, [0.3, 0.38], [0, 1]);
   const inkOpacity = useTransform(p, [0.3, 0.38], [1, 0]);
@@ -85,7 +96,33 @@ function Waveform({ p }: { p: MotionValue<number> }) {
 export function VoiceFirst() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReduced();
-  const p = useProgress(ref, ["start start", "end end"]);
+  // time-driven progress (0..1) instead of scroll: plays while on screen, then replays
+  const p = useMotionValue(0);
+  const inView = useInView(ref, { amount: 0.4 });
+  useEffect(() => {
+    if (reduce) {
+      p.set(1);
+      return;
+    }
+    if (!inView) return;
+    let ctl: AnimationPlaybackControls | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const play = (from: number) => {
+      p.set(from);
+      ctl = animate(p, 1, {
+        duration: PLAY_S * (1 - from),
+        ease: "linear",
+        onComplete: () => {
+          timer = setTimeout(() => play(0), HOLD_MS);
+        },
+      });
+    };
+    play(p.get() >= 1 ? 0 : p.get());
+    return () => {
+      ctl?.stop();
+      clearTimeout(timer);
+    };
+  }, [inView, reduce, p]);
   const [phase, setPhase] = useState(0);
   useMotionValueEvent(p, "change", (v) => setPhase(v < 0.3 ? 0 : v < 0.76 ? 1 : v < 0.86 ? 2 : 3));
 
@@ -95,9 +132,9 @@ export function VoiceFirst() {
   const pulseX = useTransform(p, [0, 1], ["-10%", "110%"]);
 
   return (
-    <section id="voice" ref={ref} className="relative h-[420vh] md:h-[460vh]" aria-label="Voice first">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
-        {/* travelling golden pulse, scroll-linked */}
+    <section id="voice" ref={ref} className="relative" aria-label="Voice first">
+      <div className="relative h-[100svh] min-h-[680px] overflow-hidden">
+        {/* travelling golden pulse */}
         <div className="pointer-events-none absolute inset-x-0 bottom-[17svh] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden>
           <motion.div className="absolute top-1/2 h-[3px] w-[220px] -translate-y-1/2" style={{ left: pulseX, background: "linear-gradient(90deg, transparent, #F5C242, transparent)", boxShadow: "0 0 24px 4px rgba(245,194,66,0.45)" }} />
         </div>
@@ -109,7 +146,7 @@ export function VoiceFirst() {
               <RevealLines className="display-md mt-5 text-ink" lines={["Ask anything.", "Out loud."]} />
             </div>
             <FadeUp className="lede max-w-[22rem] max-md:text-[0.95rem] md:pb-2" delay={0.2}>
-              Natural conversations with Kalam, complete with gestures.
+              Natural conversations with KalamSpark, complete with gestures.
             </FadeUp>
           </div>
 
@@ -127,13 +164,13 @@ export function VoiceFirst() {
               </p>
             </motion.div>
 
-            {/* Kalam */}
+            {/* KalamSpark */}
             <motion.div style={{ opacity: aOpacity, y: aY }} className="md:col-span-6 md:col-start-7 md:pt-10">
               <div className="glass rounded-[26px] p-5 md:p-7">
                 <div className="flex items-center gap-3">
                   <KalamAvatar size={38} />
                   <div>
-                    <p className="text-[0.95rem] font-bold text-ink">Kalam</p>
+                    <p className="text-[0.95rem] font-bold text-ink">KalamSpark</p>
                     <p className="flex items-center gap-1.5 text-[0.72rem] text-[#4fd49b]">
                       <span className="anim-pulse-dot h-1.5 w-1.5 rounded-full bg-[#4fd49b]" />
                       {phase >= 2 ? "Listening" : "Speaking"}
@@ -164,7 +201,7 @@ export function VoiceFirst() {
                 className="mt-3 inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 text-[0.8rem] font-semibold text-gold shadow-[0_0_40px_-10px_rgba(245,194,66,0.6)] md:mt-5"
               >
                 <Hand size={15} />
-                Kalam is pointing at the sky
+                KalamSpark is pointing at the sky
                 <span className="ml-1 text-[0.66rem] font-semibold tracking-[0.18em] text-gold/60 uppercase">Gesture</span>
               </motion.div>
             </motion.div>
@@ -172,7 +209,7 @@ export function VoiceFirst() {
 
           <div className="pb-[9svh]">
             <Waveform p={p} />
-            <p className="mt-2 text-center text-[0.68rem] tracking-[0.2em] text-ink-3 uppercase">Tap to speak, or say &ldquo;Hey Kalam&rdquo;</p>
+            <p className="mt-2 text-center text-[0.68rem] tracking-[0.2em] text-ink-3 uppercase">Tap to speak, or say &ldquo;Hey KalamSpark&rdquo;</p>
           </div>
         </div>
       </div>

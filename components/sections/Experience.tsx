@@ -1,12 +1,13 @@
 "use client";
 import { useReduced } from "@/lib/hooks";
-import { useProgress } from "@/lib/useProgress";
-import { useRef, useState } from "react";
-import { motion, useMotionValueEvent, useTransform, type MotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useTransform, type MotionValue } from "framer-motion";
+import { EASE } from "@/lib/motion";
 import { Mic, Moon } from "lucide-react";
 import { experienceStages } from "@/lib/content";
 
 const N = experienceStages.length;
+const HOLD_MS = 3500; // time on each stage before sliding to the next
 
 function Motif({ k }: { k: string }) {
   if (k === "ask")
@@ -136,22 +137,64 @@ function Panel({ i, p }: { i: number; p: MotionValue<number> }) {
 
 export function Experience() {
   const ref = useRef<HTMLElement>(null);
-  const scrollYProgress = useProgress(ref, ["start start", "end end"]);
-  const p = useTransform(scrollYProgress, [0.04, 0.96], [0, 1]);
+  const reduce = useReduced();
+  const inView = useInView(ref, { amount: 0.4 });
+  // time-driven progress (0..1) across the stages instead of scroll
+  const p = useMotionValue(0);
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const t = setTimeout(() => setStep((s) => (s + 1) % N), HOLD_MS);
+    return () => clearTimeout(t);
+  }, [step, inView]);
+  useEffect(() => {
+    const back = step === 0 && p.get() > 0.5; // loop: glide back to the first stage
+    const ctl = animate(p, step / (N - 1), { duration: reduce ? 0 : back ? 1.8 : 1.2, ease: EASE });
+    return () => ctl.stop();
+  }, [step, p, reduce]);
+
+  // gold line runs continuously: fills toward the next dot while each stage is shown
+  const line = useMotionValue(0);
+  useEffect(() => {
+    const here = step / (N - 1);
+    const next = Math.min(1, (step + 1) / (N - 1));
+    if (!inView || reduce) {
+      line.set(here);
+      return;
+    }
+    let ctl: ReturnType<typeof animate> | undefined;
+    const run = () => {
+      ctl = animate(line, next, { duration: HOLD_MS / 1000, ease: "linear" });
+    };
+    if (line.get() > here + 0.001) {
+      // looping back to the start: sweep the line back first
+      ctl = animate(line, here, { duration: 1.8, ease: EASE, onComplete: run });
+    } else {
+      line.set(Math.max(line.get(), here));
+      run();
+    }
+    return () => ctl?.stop();
+  }, [step, inView, reduce, line]);
   const x = useTransform(p, [0, 1], ["0vw", `-${(N - 1) * 100}vw`]);
-  const fill = useTransform(p, [0, 1], [0.1, 1]);
+  const fill = useTransform(line, (v) => Math.max(0.02, v));
   const [idx, setIdx] = useState(0);
   useMotionValueEvent(p, "change", (v) => setIdx(Math.round(v * (N - 1))));
 
   return (
-    <section id="experience" ref={ref} className="relative" style={{ height: `${N * 100 + 40}vh` }} aria-label="The KalamSpark experience">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
+    <section id="experience" ref={ref} className="relative" aria-label="The KalamSpark experience">
+      <div className="relative h-[100svh] min-h-[680px] overflow-hidden">
         <div className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-[1320px] items-center justify-between gap-6 px-5 pt-[12vh] md:px-8 md:pt-[13vh]">
           <p className="eyebrow">The KalamSpark experience</p>
           <ol className="hidden items-center gap-2 text-[0.78rem] font-semibold md:flex" aria-label="Stages">
             {experienceStages.map((s, i) => (
               <li key={s.key} className="flex items-center gap-2">
-                <span className={`transition-colors duration-500 ${i === idx ? "text-ink" : i < idx ? "text-gold/70" : "text-ink-3"}`}>{s.word}</span>
+                <button
+                  type="button"
+                  onClick={() => setStep(i)}
+                  className={`transition-colors duration-500 hover:text-ink ${i === idx ? "text-ink" : i < idx ? "text-gold/70" : "text-ink-3"}`}
+                >
+                  {s.word}
+                </button>
                 {i < N - 1 && <span className="text-ink-3/60">&rarr;</span>}
               </li>
             ))}

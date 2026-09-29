@@ -71,7 +71,7 @@ export function WhatIs() {
           </div>
           <div className="flex flex-col justify-end md:col-span-4 md:pb-3">
             <FadeUp className="lede" delay={0.2}>
-              KalamSpark pairs an AI study companion with the KalamSpark humanoid robot by Acubotz. Ask the robot at your desk or the app anywhere else. It is the same Kalam, with the same voice, your progress and your plan.
+              KalamSpark pairs an AI study companion with the KalamSpark humanoid robot by Acubotz. Ask the robot at your desk or the app anywhere else. It is the same KalamSpark, with the same voice, your progress and your plan.
             </FadeUp>
             <FadeUp delay={0.35} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[0.78rem] font-semibold tracking-[0.08em] text-ink-3 uppercase">
               <span>Voice</span>

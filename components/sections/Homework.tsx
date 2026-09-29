@@ -131,7 +131,7 @@ export function Homework() {
               ))}
             </div>
             <motion.div style={{ opacity: actions }} className="mt-7 hidden flex-wrap gap-2.5 pl-[60px] md:mt-10 md:flex md:pl-[80px]" aria-hidden>
-              <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 px-4 py-2 text-[0.8rem] font-semibold text-gold"><Volume2 size={14} /> Hear Kalam explain</span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 px-4 py-2 text-[0.8rem] font-semibold text-gold"><Volume2 size={14} /> Hear KalamSpark explain</span>
               <span className="rounded-full border border-white/10 px-4 py-2 text-[0.8rem] font-semibold text-ink-2">Practice similar</span>
             </motion.div>
           </div>

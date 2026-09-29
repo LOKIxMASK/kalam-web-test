@@ -17,12 +17,12 @@ const NAME_STYLE = {
 
 export function Team() {
   return (
-    <section id="team" className="relative px-5 py-[12vh] md:px-8" aria-label="The minds behind Kalam">
+    <section id="team" className="relative px-5 py-[12vh] md:px-8" aria-label="The minds behind KalamSpark">
       <div className="mx-auto max-w-[1040px]">
         <Eyebrow>The team</Eyebrow>
         <RevealLines
           className="mt-5 text-[clamp(2rem,3.6vw,3.8rem)] font-bold leading-[1] tracking-[-0.04em] text-ink"
-          lines={["The minds", <>behind <span className="text-gold-gradient">Kalam</span>.</>]}
+          lines={["The minds", <>behind <span className="text-gold-gradient">KalamSpark</span>.</>]}
         />
 
         <motion.div

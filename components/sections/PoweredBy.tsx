@@ -6,7 +6,7 @@ import { useReduced } from "@/lib/hooks";
 import { FadeUp, RevealLines } from "../ui/Reveal";
 
 const PILLARS = [
-  { icon: Layers, title: "One OS, robot and app", body: "The same Kalam on your desk and in your pocket, always in sync." },
+  { icon: Layers, title: "One OS, robot and app", body: "The same KalamSpark on your desk and in your pocket, always in sync." },
   { icon: Waves, title: "Voice, gestures, expressions", body: "Every word, nod and smile is orchestrated in real time." },
   { icon: Cpu, title: "Built by Acubotz", body: "Designed from the ground up for a small robot with a big mind." },
 ];
@@ -47,7 +47,7 @@ export function PoweredBy() {
           lines={[<><span className="text-ink">Acubotz</span><span className="text-gold-gradient">OS</span></>]}
         />
         <FadeUp className="lede mt-8 max-w-[36rem]" delay={0.25}>
-          Kalam runs on AcubotzOS, the operating system that brings the robot to life and keeps him in step with the app.
+          KalamSpark runs on AcubotzOS, the operating system that brings the robot to life and keeps him in step with the app.
         </FadeUp>
 
         <ul className="mt-16 grid w-full gap-4 text-left md:mt-20 md:grid-cols-3 md:gap-6">
